@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SVPM College Navigation</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>SVPM COLLEGE NAVIGATION</h1>
+
+        <p class="subtitle">
+            Smart Campus Navigation System
+        </p>
+
+
+        <!-- LOCATION SELECT -->
+
+        <select id="location">
+
+            <option>Select Location</option>
+
+            <option>Main Gate</option>
+
+            <option>Ground</option>
+
+            <option>Auditorium</option>
+
+            <option>Girls Hostel</option>
+
+            <option>Pharmacy</option>
+
+            <option>Diploma</option>
+
+            <option>Canteen</option>
+
+            <option>Lawn</option>
+
+        </select>
+
+
+        <!-- SHOW / HIDE DETAILS -->
+
+        <button id="detailsButton"
+                onclick="toggleDetails()">
+
+            Show Details
+
+        </button>
+
+
+        <!-- DETAILS -->
+
+        <div id="details">
+
+        </div>
+
+
+        <!-- GOOGLE MAPS -->
+
+        <button onclick="openMap()">
+
+            🌐 Open Google Maps
+
+        </button>
+
+
+        <!-- DIRECTIONS -->
+
+        <button onclick="getDirections()">
+
+            🧭 Get Directions
+
+        </button>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
