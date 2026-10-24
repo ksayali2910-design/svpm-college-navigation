@@ -1,256 +1,283 @@
-// =========================================
-// SVPM COLLEGE LOCATIONS
-// =========================================
+"use strict";
 
-const locations = {
+document.addEventListener("DOMContentLoaded", function () {
+  const loginForm = document.getElementById("loginForm");
+  const loginSection = document.getElementById("loginSection");
+  const dashboard = document.getElementById("dashboard");
+  const departmentInput = document.getElementById("department");
+  const rollInput = document.getElementById("rollNumber");
+  const loginMessage = document.getElementById("loginMessage");
+  const logoutButton = document.getElementById("logoutButton");
+  const searchInput = document.getElementById("searchInput");
 
-    "Main Gate": {
+  const books = [
+    { id: 1, title: "Python Programming", author: "Reema Thareja", category: "Programming", icon: "🐍" },
+    { id: 2, title: "Let Us C", author: "Yashavant Kanetkar", category: "Programming", icon: "💻" },
+    { id: 3, title: "Data Structures", author: "Reema Thareja", category: "Computer Science", icon: "🧩" },
+    { id: 4, title: "Database System Concepts", author: "Abraham Silberschatz", category: "Database", icon: "🗄️" },
+    { id: 5, title: "Operating System Concepts", author: "Abraham Silberschatz", category: "Computer Science", icon: "⚙️" },
+    { id: 6, title: "Computer Networks", author: "Andrew S. Tanenbaum", category: "Networking", icon: "🌐" },
+    { id: 7, title: "Artificial Intelligence", author: "Stuart Russell", category: "AI & ML", icon: "🤖" },
+    { id: 8, title: "Machine Learning", author: "Tom Mitchell", category: "AI & ML", icon: "🧠" },
+    { id: 9, title: "Clean Code", author: "Robert C. Martin", category: "Software", icon: "📘" }
+  ];
 
-        gps: "4GP2+FC8",
+  let student = null;
+  let borrowed = [];
+  let returnedCount = 0;
 
-        type: "Entrance",
+  function loadStudentData() {
+    if (!student) return;
 
-        nearby: "None",
+    try {
+      borrowed = JSON.parse(
+        localStorage.getItem(storageKey("borrowed")) || "[]"
+      );
+      returnedCount = Number(
+        localStorage.getItem(storageKey("returnedCount")) || 0
+      );
 
-        place: "Main Gate"
+      if (!Array.isArray(borrowed)) borrowed = [];
+      if (!Number.isFinite(returnedCount)) returnedCount = 0;
+    } catch (error) {
+      borrowed = [];
+      returnedCount = 0;
+    }
+  }
 
-    },
+  function storageKey(name) {
+    return "sbLibrary_" + student.department + "_" + student.roll + "_" + name;
+  }
 
+  function saveStudentData() {
+    if (!student) return;
 
-    "Ground": {
+    localStorage.setItem(storageKey("borrowed"), JSON.stringify(borrowed));
+    localStorage.setItem(storageKey("returnedCount"), String(returnedCount));
+  }
 
-        gps: "4FPX+PVV",
+  function showDashboard() {
+    loginSection.hidden = true;
+    dashboard.hidden = false;
 
-        type: "Play Ground",
+    document.getElementById("welcomeTitle").textContent =
+      "Welcome to SB Patil Library!";
 
-        nearby: "Main Gate",
+    document.getElementById("studentInfo").textContent =
+      "Department: " + student.department +
+      "  |  Roll Number: " + student.roll;
 
-        place: "Play Ground"
+    searchInput.value = "";
+    renderBooks();
+    renderBorrowed();
+    updateStats();
+  }
 
-    },
+  function showLogin() {
+    student = null;
+    borrowed = [];
+    returnedCount = 0;
 
+    dashboard.hidden = true;
+    loginSection.hidden = false;
+    loginMessage.textContent = "";
+    loginForm.reset();
+  }
 
-    "Auditorium": {
+  loginForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    loginMessage.textContent = "";
 
-        gps: "4FPX+GCH",
+    const department = departmentInput.value;
+    const rollText = rollInput.value.trim();
+    const roll = Number(rollText);
 
-        type: "Hall",
-
-        nearby: "Ground",
-
-        place: "Sharad Sabhagruh"
-
-    },
-
-
-    "Girls Hostel": {
-
-        gps: "4FPX+M67",
-
-        type: "Building",
-
-        nearby: "Before Auditorium",
-
-        place: "Rajmata Jijau Girls Hostel"
-
-    },
-
-
-    "Pharmacy": {
-
-        gps: "4GQ2+42Q",
-
-        type: "Building",
-
-        nearby: "In front of Lawn and before Diploma",
-
-        place: "SVPM's Institute of Pharmacy and College of Pharmacy"
-
-    },
-
-
-    "Diploma": {
-
-        gps: "4FQX+FM2 malegaon bk maharashtra",
-
-        type: "Building",
-
-        nearby: "After the Pharmacy",
-
-        place: "Diploma"
-
-    },
-
-
-    "Canteen": {
-
-        gps: "4FQX+C9F malegaon bk maharashtra",
-
-        type: "Canteen",
-
-        nearby: "Near Diploma",
-
-        place: "Canteen"
-
-    },
-
-
-    "Lawn": {
-
-        gps: "4FPX+WXG malegaon bk maharashtra",
-
-        type: "Lawn",
-
-        nearby: "Near Auditorium",
-
-        place: "Lawn"
-
+    if (!department) {
+      loginMessage.textContent = "Please select your department.";
+      departmentInput.focus();
+      return;
     }
 
-};
-
-
-// =========================================
-// SHOW / HIDE DETAILS
-// =========================================
-
-function toggleDetails() {
-
-    let selected =
-        document.getElementById("location").value;
-
-    let details =
-        document.getElementById("details");
-
-    let button =
-        document.getElementById("detailsButton");
-
-
-    // If no location selected
-
-    if (selected === "Select Location") {
-
-        alert("Please select a location.");
-
-        return;
+    if (
+      rollText === "" ||
+      !Number.isInteger(roll) ||
+      roll < 1 ||
+      roll > 100
+    ) {
+      loginMessage.textContent =
+        "Please enter a valid roll number from 1 to 100.";
+      rollInput.focus();
+      return;
     }
 
+    student = { department: department, roll: roll };
 
-    // If details are currently hidden
+    localStorage.setItem("sbLibraryDept", department);
+    localStorage.setItem("sbLibraryRoll", String(roll));
 
-    if (details.style.display === "none" ||
-        details.style.display === "") {
+    loadStudentData();
+    showDashboard();
+  });
 
+  logoutButton.addEventListener("click", function () {
+    localStorage.removeItem("sbLibraryDept");
+    localStorage.removeItem("sbLibraryRoll");
+    showLogin();
+  });
 
-        let loc = locations[selected];
+  searchInput.addEventListener("input", renderBooks);
 
+  function renderBooks() {
+    const bookGrid = document.getElementById("bookGrid");
+    const emptyMessage = document.getElementById("emptyMessage");
+    const searchTerm = searchInput.value.trim().toLowerCase();
 
-        details.innerHTML =
+    const filteredBooks = books.filter(function (book) {
+      return (
+        book.title.toLowerCase().includes(searchTerm) ||
+        book.author.toLowerCase().includes(searchTerm) ||
+        book.category.toLowerCase().includes(searchTerm)
+      );
+    });
 
-            "<h2>" + selected + "</h2>" +
+    bookGrid.replaceChildren();
+    emptyMessage.hidden = filteredBooks.length !== 0;
 
-            "<p><b>Place:</b> "
-            + loc.place
-            + "</p>" +
+    filteredBooks.forEach(function (book) {
+      const alreadyBorrowed = borrowed.some(function (item) {
+        return item.id === book.id;
+      });
 
-            "<p><b>GPS:</b> "
-            + loc.gps
-            + "</p>" +
+      const card = document.createElement("article");
+      card.className = "book-card";
 
-            "<p><b>Type:</b> "
-            + loc.type
-            + "</p>" +
+      const cover = document.createElement("div");
+      cover.className = "book-cover";
+      cover.textContent = book.icon;
 
-            "<p><b>Nearby:</b> "
-            + loc.nearby
-            + "</p>";
+      const title = document.createElement("h3");
+      title.textContent = book.title;
 
+      const author = document.createElement("p");
+      author.className = "author";
+      author.textContent = "By " + book.author;
 
-        details.style.display = "block";
+      const category = document.createElement("p");
+      category.className = "category";
+      category.textContent = book.category;
 
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "small-btn";
+      button.textContent = alreadyBorrowed ? "Already Borrowed" : "Borrow Book";
+      button.disabled = alreadyBorrowed;
+      button.addEventListener("click", function () {
+        borrowBook(book.id);
+      });
 
-        button.innerHTML =
-            "Hide Details";
+      card.append(cover, title, author, category, button);
+      bookGrid.appendChild(card);
+    });
+  }
 
+  function borrowBook(bookId) {
+    const book = books.find(function (item) {
+      return item.id === bookId;
+    });
+
+    if (!book || borrowed.some(function (item) {
+      return item.id === bookId;
+    })) {
+      return;
     }
 
+    borrowed.push({
+      id: book.id,
+      title: book.title,
+      borrowedOn: new Date().toLocaleDateString()
+    });
 
-    // If details are currently visible
+    saveStudentData();
+    renderBooks();
+    renderBorrowed();
+    updateStats();
+  }
 
-    else {
+  function renderBorrowed() {
+    const list = document.getElementById("borrowedList");
+    const empty = document.getElementById("noBorrowedMessage");
 
-        details.style.display = "none";
+    list.replaceChildren();
+    empty.hidden = borrowed.length !== 0;
 
+    borrowed.forEach(function (item) {
+      const row = document.createElement("div");
+      row.className = "borrowed-item";
 
-        button.innerHTML =
-            "Show Details";
+      const details = document.createElement("div");
+      const title = document.createElement("h3");
+      title.textContent = item.title;
 
-    }
+      const date = document.createElement("p");
+      date.textContent = "Borrowed on: " + item.borrowedOn;
 
-}
+      details.append(title, date);
 
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "small-btn return-btn";
+      button.textContent = "Return Book";
 
-// =========================================
-// OPEN GOOGLE MAPS
-// =========================================
+      button.addEventListener("click", function () {
+        returnBook(item.id);
+      });
 
-function openMap() {
+      row.append(details, button);
+      list.appendChild(row);
+    });
+  }
 
-    let selected =
-        document.getElementById("location").value;
+  function returnBook(bookId) {
+    const index = borrowed.findIndex(function (item) {
+      return item.id === bookId;
+    });
 
+    if (index === -1) return;
 
-    if (selected === "Select Location") {
+    borrowed.splice(index, 1);
+    returnedCount += 1;
 
-        alert("Please select a location.");
+    saveStudentData();
+    renderBooks();
+    renderBorrowed();
+    updateStats();
+  }
 
-        return;
-    }
+  function updateStats() {
+    document.getElementById("catalogueCount").textContent = books.length;
+    document.getElementById("borrowedCount").textContent = borrowed.length;
+    document.getElementById("returnedCount").textContent = returnedCount;
+  }
 
+  // Restore the last demo student if the page is refreshed.
+  const savedDepartment = localStorage.getItem("sbLibraryDept");
+  const savedRoll = localStorage.getItem("sbLibraryRoll");
 
-    let loc = locations[selected];
+  if (
+    savedDepartment &&
+    savedRoll &&
+    Number.isInteger(Number(savedRoll)) &&
+    Number(savedRoll) >= 1 &&
+    Number(savedRoll) <= 100
+  ) {
+    student = {
+      department: savedDepartment,
+      roll: Number(savedRoll)
+    };
 
-
-    let url =
-        "https://www.google.com/maps/search/?api=1&query="
-        + encodeURIComponent(
-            loc.gps + ", Malegaon Budruk, Maharashtra"
-        );
-
-
-    window.open(url, "_blank");
-
-}
-
-
-// =========================================
-// GET DIRECTIONS
-// =========================================
-
-function getDirections() {
-
-    let selected =
-        document.getElementById("location").value;
-
-
-    if (selected === "Select Location") {
-
-        alert("Please select a location.");
-
-        return;
-    }
-
-
-    let loc = locations[selected];
-
-
-    let url =
-        "https://www.google.com/maps/dir/?api=1&destination="
-        + encodeURIComponent(
-            loc.gps + ", Malegaon Budruk, Maharashtra"
-        );
-
-
-    window.open(url, "_blank");
-
-}
+    loadStudentData();
+    showDashboard();
+  } else {
+    showLogin();
+  }
+});
