@@ -3,129 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SB Patil Library</title>
+  <title>SVPM College Navigation</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
 <body>
+  <main class="container">
+    <h1>SVPM COLLEGE NAVIGATION</h1>
+    <p class="subtitle">Smart Campus Navigation System</p>
 
-  <header class="topbar">
-    <div class="brand-icon">📚</div>
-    <div>
-      <h1>SB Patil Library</h1>
-      <p>Your Campus Reading Space</p>
-    </div>
-  </header>
+    <label for="location">Select your destination</label>
 
-  <main>
-    <section id="loginSection" class="login-card">
-      <div class="book-logo">📖</div>
-      <p class="eyebrow">STUDENT PORTAL</p>
-      <h2>Welcome to SB Patil Library</h2>
-      <p class="muted">Sign in to explore your library.</p>
+    <select id="location">
+      <option value="">-- Select Location --</option>
+      <option value="Main Gate">Main Gate</option>
+      <option value="Ground">Ground</option>
+      <option value="Auditorium">Auditorium</option>
+      <option value="Girls Hostel">Girls Hostel</option>
+      <option value="Pharmacy">Pharmacy</option>
+      <option value="Diploma">Diploma</option>
+      <option value="Canteen">Canteen</option>
+      <option value="Lawn">Lawn</option>
+      <option value="Engineering Building A">Engineering Building A</option>
+      <option value="Engineering Building B">Engineering Building B</option>
+      <option value="Boys Hostel">Boys Hostel</option>
+      <option value="Play Ground">Play Ground</option>
+      <option value="SVPM Commerce College">SVPM Commerce College</option>
+    </select>
 
-      <form id="loginForm">
-        <label for="department">Select Department</label>
-        <select id="department" required>
-          <option value="">Choose your department</option>
-          <option value="IT">Information Technology (IT)</option>
-          <option value="AIML">Artificial Intelligence & ML</option>
-          <option value="CSE">Computer Science (CSE)</option>
-          <option value="ENTC">Electronics & Telecommunication</option>
-          <option value="MECH">Mechanical Engineering</option>
-          <option value="CIVIL">Civil Engineering</option>
-          <option value="ELECTRICAL">Electrical Engineering</option>
-          <option value="OTHER">Other Department</option>
-        </select>
+    <p id="message" role="status" aria-live="polite"></p>
 
-        <label for="rollNumber">Roll Number</label>
-        <input
-          type="number"
-          id="rollNumber"
-          placeholder="Enter roll number (1–100)"
-          min="1"
-          max="100"
-          step="1"
-          required
-        >
+    <button id="detailsButton" type="button">Show Details</button>
 
-        <p id="loginMessage" class="message" role="alert"></p>
+    <!-- Details appear between the buttons -->
+    <section id="details" hidden aria-live="polite"></section>
 
-        <button type="submit" id="loginButton" class="primary-btn">
-          Login to Library <span>→</span>
-        </button>
-      </form>
-
-      <p class="demo-note">Demo access: Select your department and enter roll number 1–100.</p>
-    </section>
-
-    <section id="dashboard" hidden>
-      <div class="welcome-panel">
-        <div>
-          <p class="eyebrow">YOUR LIBRARY SPACE</p>
-          <h2 id="welcomeTitle">Welcome to SB Patil Library!</h2>
-          <p id="studentInfo"></p>
-        </div>
-        <button id="logoutButton" class="outline-btn" type="button">
-          Logout
-        </button>
-      </div>
-
-      <div class="stats-grid">
-        <div class="stat-card">
-          <span>📚</span>
-          <p>Available in Catalogue</p>
-          <h3 id="catalogueCount">0</h3>
-        </div>
-        <div class="stat-card">
-          <span>📖</span>
-          <p>Books You Borrowed</p>
-          <h3 id="borrowedCount">0</h3>
-        </div>
-        <div class="stat-card">
-          <span>↩️</span>
-          <p>Books Returned</p>
-          <h3 id="returnedCount">0</h3>
-        </div>
-      </div>
-
-      <section class="content-card">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">DISCOVER & READ</p>
-            <h2>Explore Books</h2>
-          </div>
-          <input type="search" id="searchInput"
-                 placeholder="Search title or author..."
-                 aria-label="Search books">
-        </div>
-
-        <div id="bookGrid" class="book-grid"></div>
-        <p id="emptyMessage" class="muted" hidden>No books found.</p>
-      </section>
-
-      <section class="content-card">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">YOUR ACTIVITY</p>
-            <h2>My Borrowed Books</h2>
-          </div>
-        </div>
-        <div id="borrowedList" class="borrowed-list"></div>
-        <p id="noBorrowedMessage" class="muted">
-          You have not borrowed any books yet.
-        </p>
-      </section>
-
-      <p class="footer-note">
-        SB Patil Library · Read More, Learn More
-      </p>
-    </section>
+    <button id="mapButton" type="button">Open Google Maps</button>
+    <button id="directionsButton" type="button">Get Directions</button>
   </main>
-
-  <footer>
-    <p>© 2026 SB Patil Library | Student Library Portal</p>
-  </footer>
-
 </body>
 </html>
