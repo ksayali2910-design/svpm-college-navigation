@@ -106,6 +106,17 @@ select:focus-visible {
   margin: 10px 0;
 }
 
+/* New V2 Navigation Button */
+#diplomaNavigationButton {
+  background: #e58b27;
+  color: #ffffff;
+  margin-top: 18px;
+}
+
+#diplomaNavigationButton:hover {
+  background: #c97516;
+}
+
 @media (max-width: 500px) {
   body {
     padding: 12px;

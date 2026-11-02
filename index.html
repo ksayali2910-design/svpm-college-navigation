@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SVPM College Navigation</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="navix/navix.css">
   <script src="script.js" defer></script>
+  <script src="navix/navix.js" defer></script>
 </head>
 <body>
   <main class="container">
@@ -44,11 +46,53 @@
     <button
       id="diplomaNavigationButton"
       type="button"
-      onclick="window.location.href='./v2/SVPM_V2_Reference_As_Is/index.html'">
+>
       Diploma Building Navigation
     </button>
 
   </main>
+
+  <!-- NAVI-X floating campus assistant -->
+  <button id="navix-launcher" class="navix-launcher" type="button"
+          aria-label="Open NAVI-X campus assistant" aria-expanded="false" aria-controls="navix-panel">
+    <span class="navix-launcher-mark" aria-hidden="true">N</span>
+    <span class="navix-launcher-label">NAVI-X</span>
+  </button>
+
+  <section id="navix-panel" class="navix-panel" aria-label="NAVI-X assistant" aria-hidden="true">
+    <header class="navix-header">
+      <div class="navix-avatar">N</div>
+      <div class="navix-heading">
+        <strong>NAVI-X</strong>
+        <span>Next-Gen AI Intelligent Campus Navigation Assistant</span>
+      </div>
+      <button id="navix-close" class="navix-close" type="button" aria-label="Close NAVI-X">×</button>
+    </header>
+    <div class="navix-toolbar">
+      <span class="navix-status"><i></i> Campus assistant</span>
+      <div class="navix-language" role="group" aria-label="Chat language">
+        <button type="button" class="active" data-navix-lang="en" aria-pressed="true">English</button>
+        <button type="button" data-navix-lang="mr" aria-pressed="false">मराठी</button>
+      </div>
+    </div>
+    <div id="navix-messages" class="navix-messages" role="log" aria-live="polite" aria-relevant="additions">
+      <div class="navix-message bot">
+        <span class="navix-message-tag">NAVI-X</span>
+        <p>Hi! I’m NAVI-X. Your Next-Gen AI Intelligent Campus Navigation Assistant. Ask me about campus locations or Diploma Building indoor navigation.</p>
+      </div>
+    </div>
+    <div class="navix-quick-actions" aria-label="Quick actions">
+      <button type="button" data-navix-action="locations">Campus locations</button>
+      <button type="button" data-navix-action="diploma">Diploma navigation</button>
+      <button type="button" data-navix-action="help">Help</button>
+    </div>
+    <form id="navix-form" class="navix-input-row">
+      <button id="navix-mic" class="navix-mic" type="button" aria-label="Voice input" title="Voice input">🎙</button>
+      <input id="navix-input" type="text" autocomplete="off" placeholder="Type your question..." aria-label="Message NAVI-X">
+      <button class="navix-send" type="submit" aria-label="Send message">➤</button>
+    </form>
+    <div id="navix-voice-status" class="navix-voice-status" aria-live="polite">Voice input depends on browser support and microphone permission.</div>
+  </section>
+
 </body>
 </html>
-
