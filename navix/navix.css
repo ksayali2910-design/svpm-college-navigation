@@ -1,0 +1,34 @@
+
+:root { --nx-ink:#eaf4ff; --nx-muted:#9fb2ca; --nx-blue:#0b5bd3; --nx-cyan:#27d5e8; }
+.navix-launcher{position:fixed;right:24px;bottom:22px;z-index:10000;width:auto;min-width:76px;display:flex;align-items:center;justify-content:center;gap:8px;margin:0;padding:12px 17px;border:1px solid rgba(88,220,255,.55);border-radius:999px;background:linear-gradient(135deg,#102b59,#087fa9);color:#fff;box-shadow:0 8px 28px rgba(0,37,85,.32),0 0 18px rgba(39,213,232,.2);cursor:pointer}
+.navix-launcher:hover{background:linear-gradient(135deg,#17417e,#079ab5)}
+.navix-launcher-mark{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:#27d5e8;color:#06213a;font-weight:900}
+.navix-launcher-label{font-size:14px;letter-spacing:.7px}
+.navix-panel{position:fixed;right:24px;bottom:88px;z-index:10001;width:min(390px,calc(100vw - 28px));height:min(590px,calc(100vh - 120px));display:none;flex-direction:column;overflow:hidden;border:1px solid #274d70;border-radius:18px;background:#0b1728;color:var(--nx-ink);box-shadow:0 18px 60px rgba(0,0,0,.38);text-align:left}
+.navix-panel.is-open{display:flex}
+.navix-header{display:flex;align-items:center;gap:11px;padding:15px;background:linear-gradient(115deg,#102b50,#075d79);color:#fff}
+.navix-avatar{flex:0 0 39px;width:39px;height:39px;display:grid;place-items:center;border-radius:50%;background:#2bd4e5;color:#09233c;font-size:21px;font-weight:900}
+.navix-heading{min-width:0;display:flex;flex-direction:column;gap:3px}
+.navix-heading strong{font-size:17px;letter-spacing:1px}
+.navix-heading span{font-size:10px;line-height:1.35;color:#c4eaf3}
+.navix-close{width:34px;flex:0 0 34px;margin:0 0 0 auto;padding:0;border-radius:50%;background:rgba(255,255,255,.12);font-size:25px;line-height:32px}
+.navix-toolbar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 13px;border-bottom:1px solid #20364f}
+.navix-status{font-size:11px;color:#b8cbe0}.navix-status i{display:inline-block;width:7px;height:7px;margin-right:5px;border-radius:50%;background:#4ade80}
+.navix-language{display:flex;gap:4px}.navix-language button{width:auto;margin:0;padding:5px 9px;border:1px solid #31506d;border-radius:20px;background:#132840;color:#c7d7e8;font-size:11px}
+.navix-language button.active{background:#0c6a91;border-color:#36cde0;color:#fff}
+.navix-messages{flex:1;min-height:0;overflow-y:auto;padding:14px;background:radial-gradient(ellipse at top right,rgba(18,75,111,.22),transparent 60%),#0b1728}
+.navix-message{max-width:92%;margin:0 0 12px;padding:10px 12px;border:1px solid #233c58;border-radius:13px;background:#14263b;color:#eaf4ff;font-size:13px;line-height:1.5;overflow-wrap:anywhere}
+.navix-message.user{margin-left:auto;border-color:#12658b;background:#0d4665}
+.navix-message p{margin:4px 0 0}.navix-message-tag{font-size:9px;font-weight:800;letter-spacing:1px;color:#5ee4ef}
+.navix-message.user .navix-message-tag{color:#a9e8ff}
+.navix-message button{width:auto;display:inline-block;margin:6px 5px 0 0;padding:7px 10px;border-radius:8px;background:#176b9c;font-size:11px}
+.navix-quick-actions{display:flex;flex-wrap:wrap;gap:6px;padding:9px 11px;border-top:1px solid #20364f}
+.navix-quick-actions button{width:auto;margin:0;padding:7px 9px;border:1px solid #315879;border-radius:18px;background:#112b44;color:#c9e9f3;font-size:11px}
+.navix-input-row{display:flex;align-items:center;gap:7px;padding:10px;border-top:1px solid #20364f;background:#0e1d30}
+.navix-input-row input{min-width:0;flex:1;margin:0;padding:11px 12px;border:1px solid #34516c;border-radius:22px;background:#14283e;color:#fff;font-size:13px}
+.navix-input-row input::placeholder{color:#91a8c0}
+.navix-input-row button{width:38px;height:38px;flex:0 0 38px;margin:0;padding:0;border-radius:50%;font-size:16px}
+.navix-mic{background:#1b3b58}.navix-send{background:#087eaa}
+.navix-voice-status{padding:0 12px 8px;background:#0e1d30;color:#8fa8c0;font-size:10px}
+.navix-voice-status.error{color:#ffb4a9}
+@media(max-width:520px){.navix-launcher{right:14px;bottom:14px}.navix-panel{right:10px;bottom:76px;width:calc(100vw - 20px);height:min(600px,calc(100vh - 96px))}}
